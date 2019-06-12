@@ -180,7 +180,7 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
   - Prevents the need to explicitly import `shallow, render, mount` explicitly in test files.
 
 ## React Testing with Enzyme: Unit and Integration Tests for React Components
-- `src/App.spec.js`
+- `src/App.spec.js`: check the rendered HTML tag
   ```
   import React from 'react';
   import App, { doIncrement, doDecrement, Counter } from './App';
@@ -196,7 +196,75 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
     });
   });
   ```
-- _Note_
-  - https://github.com/react-cosmos/react-cosmos/issues/567
-  - https://facebook.github.io/create-react-app/docs/running-tests
-  
+- `shallow`
+  - Simplest form of rendering a component with Enzyme.
+  - Only renders the component; not the content of child components: enables testing the component in isolation.
+  - `.length(1)`: There should only be one Counter component.
+  - Can also check specific HTML tags or CSS classes
+    - `.find('li')`
+    - `.find('.list')`
+  - Can also check rendered HTML elements by selecting them with [Enzyme selectors](https://github.com/airbnb/enzyme/blob/master/docs/api/selector.md)
+    - Can also check conditional rendering (length 0 or 1)
+- Assert whether the correct props are being passed to the next component.
+  ```
+  describe('App Component', () => {
+    it('renders the Counter wrapper', () => {
+      const wrapper = shallow(<App />);
+      expect(wrapper.find(Counter)).to.have.length(1);
+    });
+
+    it('passes all props to Counter wrapper', () => {
+      const wrapper = shallow(<App />);
+      let counterWrapper = wrapper.find(Counter);
+
+      expect(counterWrapper.props().counter).to.equal(0);
+
+      wrapper.setState({ counter: -1 });
+
+      counterWrapper = wrapper.find(Counter);
+      expect(counterWrapper.props().counter).to.equal(-1);
+    });
+  });
+  ```
+- Can simulate clicks with Enzyme
+  ```
+  it('increments the counter', () => {
+    const wrapper = shallow(<App />);
+
+    wrapper.setState({ counter: 0 });
+    wrapper.find('button').at(0).simulate('click');
+
+    expect(wrapper.state().counter).to.equal(1);
+  });
+
+  it('decrements the counter', () => {
+    const wrapper = shallow(<App />);
+
+    wrapper.setState({ counter: 0 });
+    wrapper.find('button').at(1).simulate('click');
+
+    expect(wrapper.state().counter).to.equal(-1);
+  });
+  ```
+  - With multiple buttons, can use `at()` to access the index of the desired element. But would be better to use a more specific Enzyme selector.
+- Test patterns: Test that
+  - Functions alter component state correctly
+  - Component renders without the child component hierarchy (`shallow()`)
+  - Component renders entire component hierarchy
+    - With lifecycle methods (`mount()`)
+    - Or without lifecycle methods (`render()`)
+- Testing philosophies
+  - Testing pyramid (most common approach in software engineering)
+    - Says you should have 
+      - Lots of unit tests
+      - Several integration tests
+      - A few integration tests
+  - Component test approach
+    - Says you should have
+      - Few unit tests
+        - Not very likely to break (because they're _too_ isolated from the rest of the application)
+      - Many integration tests
+        - Test components _in the context of_ other components.
+    - Use more `mount()` or `render()`, less `shallow()`.
+      - Render, test, verify existence and behavior of entire component tree.
+

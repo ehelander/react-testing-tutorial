@@ -47,6 +47,7 @@ class App extends Component {
         <button
           type="button"
           onClick={this.onIncrement}
+          id="increment"
         >
           Increment
         </button>
@@ -54,6 +55,7 @@ class App extends Component {
         <button
           type="button"
           onClick={this.onDecrement}
+          id="decrement"
         >
           Decrement
         </button>
