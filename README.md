@@ -42,11 +42,12 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 - Second testing philosophy for React:
   - Write mostly integration tests and not so many unit tests.
 
-## Psuedo React Application Setup for Testing
+## [Psuedo React Application Setup for Testing](https://www.robinwieruch.de/react-testing-tutorial/#react-test-setup)
 - `create-react-app react-testing`
 - It's ok to export components and functions from a file solely for the sake of testing.
 
-## Mocha with Chai Test Setup in React
+## Mocha and Chai
+### [Mocha with Chai Test Setup in React](https://www.robinwieruch.de/react-testing-tutorial/#react-mocha-chai-test-setup)
 - 3 libraries needed for a minimal test environment: 
   - 1: There needs to be an entity which is responsible for running all of our tests in a certain framework.
     - [Mocha](https://github.com/mochajs/mocha)
@@ -115,7 +116,7 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
       - Enables test to ignore styles (since they shouldn't necessarily affect the tests)
       - Add `--require ignore-styles 'src/**/*.spec.js'` at the end of the `test:unit` command.
 
-## Unit Tests for React State Changes
+### [Unit Tests for React State Changes](https://www.robinwieruch.de/react-testing-tutorial/#react-component-tests-state-unit)
 - Functions are perfect candidates for unit tests (assuming they're pure): take an input, return an output.
 - `touch App.spec.js`
   ```
@@ -156,7 +157,8 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
     ```
 - Note: Ended up adding `import { expect } from 'chai';` and using `npm run test` instead.
 
-## Enzyme Test Setup in React
+## Enzyme
+### [Enzyme Test Setup in React](https://www.robinwieruch.de/react-testing-tutorial/#react-enzyme-test-setup)
 - Enzyme:
   - Library created by Airbnb, introduced for component tests.
   - For testing React components with unit and integration tests
@@ -178,8 +180,7 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
   global.shallow = shallow;
   ```
   - Prevents the need to explicitly import `shallow, render, mount` explicitly in test files.
-
-## React Testing with Enzyme: Unit and Integration Tests for React Components
+### [React Testing with Enzyme: Unit and Integration Tests for React Components](https://www.robinwieruch.de/react-testing-tutorial/#react-component-tests-integration)
 - `src/App.spec.js`: check the rendered HTML tag
   ```
   import React from 'react';
@@ -268,3 +269,132 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
     - Use more `mount()` or `render()`, less `shallow()`.
       - Render, test, verify existence and behavior of entire component tree.
 
+## Sinon
+### [Sinon Test Setup in React](https://www.robinwieruch.de/react-testing-tutorial/#react-sinon-test-setup)
+- Introduce an artificial asynchronous scenario
+  - Fetch data in `componentDidMount()`
+  - `npm install --save axios`
+  ```
+  import React, { Component } from 'react';
+  import axios from 'axios';
+
+  ...
+
+  class App extends Component {
+    constructor() {
+      super();
+
+      this.state = {
+        counter: 0,
+        asyncCounters: null,
+      };
+
+      this.onIncrement = this.onIncrement.bind(this);
+      this.onDecrement = this.onDecrement.bind(this);
+    }
+
+    componentDidMount() {
+      axios.get('http://mypseudodomain/counter')
+        .then(counter => this.setState({ asyncCounters: counter }))
+        .catch(error => console.log(error));
+    }
+
+    onIncrement() {
+      this.setState(doIncrement);
+    }
+
+    onDecrement() {
+      this.setState(doDecrement);
+    }
+
+    render() {
+      ...
+    }
+  }
+
+  ...
+
+  export default App;
+  ```
+  - Sinon
+    - `npm install --save-dev sinon`
+    - For testing asynchronous data
+      - Spies, stubs, mocks
+    - Add Sinon as another global function in `test/helpers.js`
+### [React Testing with Sinon](https://www.robinwieruch.de/react-testing-tutorial/#react-sinon-testing)
+- Spy
+  - A spy can be used on any function for assertions. After a spy is called, you can assert (for example) how many times the function was called for the test.
+    ```
+    describe('App Component', () => {
+      it('calls componentDidMount', () => {
+        sinon.spy(App.prototype, 'componentDidMount');
+
+        const wrapper = mount(<App />);
+        expect(App.prototype.componentDidMount.calledOnce).to.equal(true);
+      });
+    });
+    ```
+  - Note, though, that this is just for demonstration. It doesn't make sense to test React lifecycle methods.
+  - Mocha `before()` and `after()` (happen before/after the `describe()` test suites).
+- Stub
+  - Test stubs are functions (spies) with pre-programmed behavior: enables full control over spies.
+  ```
+  import React from 'react';
+  import axios from 'axios';
+  import App, { doIncrement, doDecrement, Counter } from './App';
+
+  ...
+
+  describe('App Component', () => {
+    const result = [3, 5, 9];
+    const promise = Promise.resolve(result);
+
+    before(() => {
+      sinon.stub(axios, 'get').withArgs('http://mydomain/counter').returns(promise);
+    });
+
+    after(() => {
+      axios.get.restore();
+    });
+
+    ...
+  });
+  ```
+  - `.restore()` makes sure the `get()` method we stubbed earlier is returned to it's native behavior.
+  ```
+  describe('App Component', () => {
+    const result = [3, 5, 9];
+    const promise = Promise.resolve(result);
+
+    before(() => {
+      sinon.stub(axios, 'get').withArgs('http://mydomain/counter').returns(promise);
+    });
+
+    after(() => {
+      axios.get.restore();
+    });
+
+    ...
+
+    it('fetches async counters', () => {
+      const wrapper = shallow(<App />);
+
+      expect(wrapper.state().asyncCounters).to.equal(null);
+
+      promise.then(() => {
+        expect(wrapper.state().asyncCounters).to.equal(result);
+      });
+    });
+  });
+  ```
+
+## Jest
+### [Jest Test Setup in React](https://www.robinwieruch.de/react-testing-tutorial/#react-jest-test-setup)
+### [React Testing with Jest](https://www.robinwieruch.de/react-testing-tutorial/#react-jest-snapshot-tests)
+
+## End-to-end (E2E) Tests
+### [React End-to-end (E2E) Tests with Cypress.io](https://www.robinwieruch.de/react-testing-tutorial/#react-e2e-tests-cypress)
+
+## CI and Tests
+### [React Component Tests and Continuous Integration](https://www.robinwieruch.de/react-testing-tutorial/#react-component-tests-continuous-integration)
+### [React Component Test Coverage with Coveralls](https://www.robinwieruch.de/react-testing-tutorial/#react-component-test-coverage-coveralls)

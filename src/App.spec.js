@@ -1,5 +1,5 @@
 import React from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import App, { doIncrement, doDecrement, Counter } from './App';
 
 describe('Local State', () => {
@@ -20,6 +20,17 @@ describe('Local State', () => {
 
 
 describe('App Component', () => {
+  const result = [3, 5, 9];
+  const promise = Promise.resolve(result);
+
+  before(() => {
+    sinon.stub(axios, 'get').withArgs('http://mydomain/counter').returns(promise);
+  });
+
+  after(() => {
+    axios.get.restore();
+  });
+
   it('renders the Counter wrapper', () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find(Counter)).to.have.length(1);
@@ -42,23 +53,41 @@ describe('App Component', () => {
 
     wrapper.setState({ counter: 0 });
     expect(wrapper.state().counter).to.equal(0);
-    // wrapper.find('button').at(0).simulate('click');
     wrapper.find('#increment').at(0).simulate('click');
     
     expect(wrapper.state().counter).not.to.equal(0);
     expect(wrapper.state().counter).to.equal(1);
   });
+
   it('decrements the counter', () => {
     const wrapper = shallow(<App />);
 
     wrapper.setState({ counter: 0 });
     expect(wrapper.state().counter).to.equal(0);
-    // wrapper.find('button').at(0).simulate('click');
     wrapper.find('#decrement').at(0).simulate('click');
     
     expect(wrapper.state().counter).not.to.equal(0);
     expect(wrapper.state().counter).to.equal(-1);
   });
+
+  it('calls componentDidMount', () => {
+    sinon.spy(App.prototype, 'componentDidMount');
+
+    const wrapper = mount(<App />);
+    expect(App.prototype.componentDidMount.calledOnce).to.equal(true);
+  });
+
+  it('fetches async counters', () => {
+    const wrapper = shallow(<App />);
+
+    expect(wrapper.state().asyncCounters).to.equal(null);
+
+    promise.then(() => {
+      expect(wrapper.state().asyncCounters).to.equal(result);
+    })
+  })
+
+
 });
 
 // describe('App Component', () => {
