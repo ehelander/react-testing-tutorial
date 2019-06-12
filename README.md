@@ -457,6 +457,34 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 
 ## End-to-end (E2E) Tests
 ### [React End-to-end (E2E) Tests with Cypress.io](https://www.robinwieruch.de/react-testing-tutorial/#react-e2e-tests-cypress)
+- [Cypress.io](https://cypress.io/)
+  - End-to-end (E2E) testing library
+    - High-quality documentation
+    - Concise and clean API
+- Install
+  - `npm install --save-dev cypress`
+- Create a dedicated folder
+  - `mkdir -p cypress/integration`
+- Add script to `package.json`
+  - `"test:cypress": "cypress open"`
+  - Can change `open` to `run` to run every test by default without opening the additional window
+- Add `cypress/integration/App.e2e.js`
+  - Simple test to verify Cypress is working:
+    ```
+    describe('App E2E', () => {
+      it('should assert that true is equal to true', () => {
+        expect(true).to.equal(true);
+      });
+    });
+    ```
+- Assertions (such as `expect()`) are used from Chai.
+- Additional info about [video and screenshot capabilities of Cypress.io](https://docs.cypress.io/guides/guides/screenshots-and-videos.html)
+- Can suppress video recording in cypress.json
+  ```
+  {
+  "video": false
+}
+  ```
 
 ## CI and Tests
 ### [React Component Tests and Continuous Integration](https://www.robinwieruch.de/react-testing-tutorial/#react-component-tests-continuous-integration)
