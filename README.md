@@ -1,71 +1,36 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# react-components-test-setup
 
-## Available Scripts
+[![Build Status](https://travis-ci.org/rwieruch/react-components-test-setup.svg?branch=master)](https://travis-ci.org/rwieruch/react-components-test-setup) [![Coverage Status](https://coveralls.io/repos/github/rwieruch/react-components-test-setup/badge.svg?branch=master)](https://coveralls.io/github/rwieruch/react-components-test-setup?branch=master) [![Slack](https://slack-the-road-to-learn-react.wieruch.com/badge.svg)](https://slack-the-road-to-learn-react.wieruch.com/) [![Greenkeeper badge](https://badges.greenkeeper.io/rwieruch/react-components-test-setup.svg)](https://greenkeeper.io/)
 
-In the project directory, you can run:
+A solid test setup for React components with Mocha, Chai, Sinon, Enzyme and Jest in a [Webpack/Babel/React](https://github.com/rwieruch/minimal-react-webpack-babel-setup) application.
 
-### `npm start`
+Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](https://www.robinwieruch.de/react-testing-tutorial/)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+* React 16
+* Webpack 4
+* Babel
+* Staging ES Next Features
+* Hot Module Replacement
+* Testing
+  * Mocha
+  * Chai
+  * Enzyme
+  * Sinon
+  * Jest
+  * Unit/Integration Test (Chai, Enzyme) Watcher
+  * Snapshot Test (Jest) Watcher
+  * Travis CI
+  * Coveralls.io
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+* `git clone git@github.com:rwieruch/react-components-test-setup.git`
+* cd react-components-test-setup
+* npm install
+* npm start
+* visit `http://localhost:8080/`
 
 # Eric's Notes
 - [React Testing Tutorial: Test Frameworks & Component Tests](https://www.robinwieruch.de/react-testing-tutorial/)
@@ -213,3 +178,25 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
   global.shallow = shallow;
   ```
   - Prevents the need to explicitly import `shallow, render, mount` explicitly in test files.
+
+## React Testing with Enzyme: Unit and Integration Tests for React Components
+- `src/App.spec.js`
+  ```
+  import React from 'react';
+  import App, { doIncrement, doDecrement, Counter } from './App';
+
+  describe('Local State', () => {
+  ...
+  });
+
+  describe('App Component', () => {
+    it('renders the Counter wrapper', () => {
+      const wrapper = shallow(<App />);
+      expect(wrapper.find(Counter)).to.have.length(1);
+    });
+  });
+  ```
+- _Note_
+  - https://github.com/react-cosmos/react-cosmos/issues/567
+  - https://facebook.github.io/create-react-app/docs/running-tests
+  - 
