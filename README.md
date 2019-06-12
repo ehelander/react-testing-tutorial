@@ -149,3 +149,45 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
       - `npm install --save-dev ignore-styles`
       - Enables test to ignore styles (since they shouldn't necessarily affect the tests)
       - Add `--require ignore-styles 'src/**/*.spec.js'` at the end of the `test:unit` command.
+
+## Unit Tests for React State Changes
+- Functions are perfect candidates for unit tests (assuming they're pure): take an input, return an output.
+- `touch App.spec.js`
+  ```
+  describe('Local State', () => {
+    it('should increment the counter in state', () => {
+
+    });
+
+    it('should decrement the counter in state', () => {
+
+    });
+  });
+  ```
+  - `describe` block defines the test suite
+  - `it` defines the test cases
+    - 3 steps:
+      - arrange
+      - act
+      - assert
+    ```
+    import { doIncrement, doDecrement } from './App';
+
+    describe('Local State', () => {
+      it('should increment the counter in state', () => {
+        const state = { counter: 0 };
+        const newState = doIncrement(state);
+
+        expect(newState.counter).to.equal(1);
+      });
+
+      it('should decrement the counter in state', () => {
+        const state = { counter: 0 };
+        const newState = doDecrement(state);
+
+        expect(newState.counter).to.equal(-1);
+      });
+    });
+    ```
+- Note: Ended up adding `import { expect } from 'chai';` and using `npm run test` instead.
+
