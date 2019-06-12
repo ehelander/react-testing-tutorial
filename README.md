@@ -191,3 +191,25 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
     ```
 - Note: Ended up adding `import { expect } from 'chai';` and using `npm run test` instead.
 
+## Enzyme Test Setup in React
+- Enzyme:
+  - Library created by Airbnb, introduced for component tests.
+  - For testing React components with unit and integration tests
+  - `npm install --save-dev enzyme`
+  - Adapter depends on React version
+    - `npm install --save-dev enzyme-adapter-react-16`
+- Set up Enzyme in `test/helpers.js`
+  ```
+  import { expect } from 'chai';
+  import { mount, render, shallow, configure} from 'enzyme';
+  import Adapter from 'enzyme-adapter-react-16';
+
+  configure({ adapter: new Adapter() });
+
+  global.expect = expect;
+
+  global.mount = mount;
+  global.render = render;
+  global.shallow = shallow;
+  ```
+  - Prevents the need to explicitly import `shallow, render, mount` explicitly in test files.

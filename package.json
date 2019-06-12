@@ -33,6 +33,7 @@
   "devDependencies": {
     "@babel/register": "^7.4.4",
     "chai": "^4.2.0",
+    "enzyme-adapter-react-16": "^1.14.0",
     "ignore-styles": "^5.0.1",
     "jsdom": "^15.1.1",
     "mocha": "^6.1.4"
