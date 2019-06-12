@@ -390,7 +390,70 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 
 ## Jest
 ### [Jest Test Setup in React](https://www.robinwieruch.de/react-testing-tutorial/#react-jest-test-setup)
+- [Jest](https://facebook.github.io/jest/)
+  - Useful for component tests
+  - Official testing library by Facebook
+  - Introduced snapshot tests
+    - Supplement Enzyme unit and integration tests
+    - Snapshots
+      - Creates a snapshot of your rendered component's output when you run the test.
+      - This snapshot is then used for diffing it to the next snapshot when the test is run again.
+      - If the output has changed, the test will fail.
+        - Either accept the changes or deny them and fix the component.
+      - Keep tests lightweight.
+        - More about rendered output; less about business logic (better tackled with Enzyme).
+- Jest comes with its own test runner.
+  - API differences
+    - `test()` block (instead of `it()` block)
+    - `toEqual()` (instead of `to.equal()` as in Chai)
+  - Can also use Jest for everything (setting up Enzyme and Sinon in the Jest environment, without using Mocha and Chai)
+- `npm install --save-dev jest react-test-renderer`
+- Create `test/jest.config.json`
+  ```
+  {
+    "testRegex": "((\\.|/*.)(snapshot))\\.js?$",
+    "rootDir": ".."
+  }
+  ```
+  - `testRegex` checks for `*.snapshot.js` (vs. `*.spec.js`);
+  - `rootDir` specifies the root folder where Jest should start to run though the folders recursively (go up one directory from `/test` to access `/src`)
+- Install two packages to make it work with Babel: `npm install --save-dev babel-jest babel-core@^7.0.0-bridge.0`
+- Specify new scripts in `package.json`
+  ```
+  "test:snapshot": "jest --config ./test/jest.config.json",
+  "test:snapshot:watch": "npm run test:snapshot -- --watch"
+  ```
+- Run Jest snapshot tests (in watch mode) in one terminal, and Mocha test runner in another
 ### [React Testing with Jest](https://www.robinwieruch.de/react-testing-tutorial/#react-jest-snapshot-tests)
+- Create `src/App.snapshot.js`
+- Minimal snapshot tests always follow the same pattern
+  ```
+  import React from 'react';
+  import renderer from 'react-test-renderer';
+
+  import App, { Counter } from './App';
+
+  describe('App Snapshot', () => {
+    test('renders', () => {
+      const component = renderer.create(
+        <App />
+      );
+      let tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
+  describe('Counter Snapshot', () => {
+    test('renders', () => {
+      const component = renderer.create(
+        <Counter counter={1} />
+      );
+      let tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+  });
+  ```
+- Remember: Jest Snapshot tests are intended to remain _lightweight_ and shouldn't add much development time.
 
 ## End-to-end (E2E) Tests
 ### [React End-to-end (E2E) Tests with Cypress.io](https://www.robinwieruch.de/react-testing-tutorial/#react-e2e-tests-cypress)

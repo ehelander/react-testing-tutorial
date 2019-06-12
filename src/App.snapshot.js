@@ -3,7 +3,7 @@ import renderer from 'react-test-renderer';
 
 import App, { Counter } from './App';
 
-describe('App Snapshot', () => {
+describe('App snapshot', () => {
   test('renders', () => {
     const component = renderer.create(
       <App />
@@ -13,7 +13,7 @@ describe('App Snapshot', () => {
   });
 });
 
-describe('Counter Snapshot', () => {
+describe('Counter snapshot', () => {
   test('renders', () => {
     const component = renderer.create(
       <Counter counter={1} />
