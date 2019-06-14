@@ -528,6 +528,7 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 ## CI and Tests
 ### [React Component Tests and Continuous Integration](https://www.robinwieruch.de/react-testing-tutorial/#react-component-tests-continuous-integration)
 - Set up and create an account for [Travis CI](https://travis-ci.org/) via GitHub account
+- Toggle the repository switch.
 - Tell Travis CI how to install and run your app in their environment.
   - `touch .travis.yml`
     ```
@@ -542,4 +543,6 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
     script:
       - npm run test:unit && npm run test:snapshot
     ```
+- Tests will then run on push.
+- Add E2E tests: `npm run test:unit && npm run test:snapshot && npm run test:cypress`
 ### [React Component Test Coverage with Coveralls](https://www.robinwieruch.de/react-testing-tutorial/#react-component-test-coverage-coveralls)
