@@ -501,8 +501,34 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
     ```
   - **Best practice**: Add a `baseUrl` to `cypress.json` config file (not only DRY; also performance improvement).
     - Then can change `cy.visit('http://localhost:8080` to `cy.visit('/');`.
-    
+  - Click buttons
+    ```
+      it('should increment and decrement the counter', () => {
+        cy.visit('/');
+
+        cy.get('p')
+          .should('have.text', '0');
+
+        cy.contains('Increment').click();
+        cy.get('p')
+          .should('have.text', '1');
+        
+          cy.contains('Increment').click();
+        cy.get('p')
+          .should('have.text', '2');
+        
+        cy.contains('Decrement').click();
+        cy.get('p')
+          .should('have.text', '1');
+      });
+    ```
+- For using sample data in E2E tests, check out fixtures in Cypress.
+- Use Sinon (built-in for testing async code) for spies, stubs, and mocks.
 
 ## CI and Tests
 ### [React Component Tests and Continuous Integration](https://www.robinwieruch.de/react-testing-tutorial/#react-component-tests-continuous-integration)
+- Set up and create an account for [Travis CI](https://travis-ci.org/) via GitHub account
+- Tell Travis CI how to install and run your app in their environment.
+  - `touch .travis.yml`
+  - 
 ### [React Component Test Coverage with Coveralls](https://www.robinwieruch.de/react-testing-tutorial/#react-component-test-coverage-coveralls)
