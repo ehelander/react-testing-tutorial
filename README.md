@@ -550,3 +550,23 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 - Add E2E tests: `npm run test:unit && npm run test:snapshot && npm run test:cypress`
 - Add build status badge: `[![Build Status](https://travis-ci.org/ehelander/react-testing-tutorial.svg?branch=master)](https://travis-ci.org/ehelander/react-testing-tutorial)`
 ### [React Component Test Coverage with Coveralls](https://www.robinwieruch.de/react-testing-tutorial/#react-component-test-coverage-coveralls)
+- Coveralls can be used for any of the tests in your app.
+- Sign up at [Coveralls.io](https://coveralls.io/) via GitHub account. Synchronize GitHub repos and toggle this repo.
+- Install: `npm install --save-dev coveralls`
+- New `package.json` script: ` "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"`
+- Extend `.travis.yml`
+  ```
+  language: node_js
+
+  node_js:
+    - stable
+
+  install:
+    - npm install
+
+  script:
+    - npm run test:unit -- --coverage && npm run test:snapshot -- --coverage && npm run test:cypress
+
+  after_script:
+    - COVERALLS_REPO_TOKEN=$coveralls_repo_token npm run coveralls
+  ```
