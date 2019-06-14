@@ -482,9 +482,26 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 - Can suppress video recording in cypress.json
   ```
   {
-  "video": false
-}
+    "video": false
+  }
   ```
+- Since Cypress offers end-to-end testing, the application must be started before visiting the website with Cypress; a local development server can be used.
+  - Library: https://github.com/bahmutov/start-server-and-test
+  - `npm install --save-dev start-server-and-test`
+  - To visit the running application with Cypress, use the global `cy` Cypress object.
+    ```
+    describe('App E2E', () => {
+      it('should have a header', () => {
+        cy.visit('http://localhost:8080');
+
+        cy.get('h1')
+          .should('have.text', 'My Counter');
+      });
+    });
+    ```
+  - **Best practice**: Add a `baseUrl` to `cypress.json` config file (not only DRY; also performance improvement).
+    - Then can change `cy.visit('http://localhost:8080` to `cy.visit('/');`.
+    
 
 ## CI and Tests
 ### [React Component Tests and Continuous Integration](https://www.robinwieruch.de/react-testing-tutorial/#react-component-tests-continuous-integration)
