@@ -32,8 +32,10 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 * npm start
 * visit `http://localhost:8080/`
 
-[![Build Status](https://travis-ci.org/ehelander/react-testing-tutorial.svg?branch=master)](https://travis-ci.org/ehelander/react-testing-tutorial)
 # Eric's Notes
+[![Build Status](https://travis-ci.org/ehelander/react-testing-tutorial.svg?branch=master)](https://travis-ci.org/ehelander/react-testing-tutorial)
+
+## Intro
 - [React Testing Tutorial: Test Frameworks & Component Tests](https://www.robinwieruch.de/react-testing-tutorial/)
 - `create-react-app` comes with Jest as a test runner and assertion library. 
 - Testing pyramid
