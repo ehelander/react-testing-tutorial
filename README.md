@@ -530,5 +530,16 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 - Set up and create an account for [Travis CI](https://travis-ci.org/) via GitHub account
 - Tell Travis CI how to install and run your app in their environment.
   - `touch .travis.yml`
-  - 
+    ```
+    language: node_js
+
+    node_js:
+      - stable
+
+    install:
+      - npm install
+
+    script:
+      - npm run test:unit && npm run test:snapshot
+    ```
 ### [React Component Test Coverage with Coveralls](https://www.robinwieruch.de/react-testing-tutorial/#react-component-test-coverage-coveralls)
