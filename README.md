@@ -34,6 +34,7 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 
 # Eric's Notes
 [![Build Status](https://travis-ci.org/ehelander/react-testing-tutorial.svg?branch=master)](https://travis-ci.org/ehelander/react-testing-tutorial)
+[![Coverage Status](https://coveralls.io/repos/github/ehelander/react-testing-tutorial/badge.svg)](https://coveralls.io/github/ehelander/react-testing-tutorial)
 
 ## Intro
 - [React Testing Tutorial: Test Frameworks & Component Tests](https://www.robinwieruch.de/react-testing-tutorial/)
