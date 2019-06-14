@@ -32,6 +32,7 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
 * npm start
 * visit `http://localhost:8080/`
 
+[![Build Status](https://travis-ci.org/ehelander/react-testing-tutorial.svg?branch=master)](https://travis-ci.org/ehelander/react-testing-tutorial)
 # Eric's Notes
 - [React Testing Tutorial: Test Frameworks & Component Tests](https://www.robinwieruch.de/react-testing-tutorial/)
 - `create-react-app` comes with Jest as a test runner and assertion library. 
@@ -545,4 +546,5 @@ Read more about it: [React Testing Tutorial: Test Frameworks & Component Tests](
     ```
 - Tests will then run on push.
 - Add E2E tests: `npm run test:unit && npm run test:snapshot && npm run test:cypress`
+- Add build status badge: `[![Build Status](https://travis-ci.org/ehelander/react-testing-tutorial.svg?branch=master)](https://travis-ci.org/ehelander/react-testing-tutorial)`
 ### [React Component Test Coverage with Coveralls](https://www.robinwieruch.de/react-testing-tutorial/#react-component-test-coverage-coveralls)
